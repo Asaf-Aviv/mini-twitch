@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import StreamersList from './StreamersList/StreamersList';
 import GameController from './GameController/GameController';
 import TwitchSearchBar from './TwitchSearchBar/TwitchSearchBar';
 import TwitchPlayer from './TwitchPlayer/TwitchPlayer';
-import { twitchHeaders, uniqueFrom } from '../../utils/utils';
+import { twitchFetcher, uniqueFrom } from '../../utils/utils';
 
 import './Twitch.sass';
 
@@ -32,14 +31,14 @@ const Twitch = () => {
   const getChannels = async (streamers) => {
     const queryString = streamers.map(s => s.user_id).join(',');
 
-    const { data } = await axios(`https://api.twitch.tv/kraken/streams/?channel=${queryString}`, twitchHeaders);
+    const { data } = await twitchFetcher(`https://api.twitch.tv/kraken/streams/?channel=${queryString}`);
     return data.streams;
   };
 
   const getStreamersList = async (gameId, pagination = '') => {
     const paginationQuery = pagination ? `&after=${pagination}` : '';
 
-    const { data } = await axios(`https://api.twitch.tv/helix/streams?game_id=${gameId}${paginationQuery}`, twitchHeaders);
+    const { data } = await twitchFetcher(`https://api.twitch.tv/helix/streams?game_id=${gameId}${paginationQuery}`);
 
     return [data.data, data.pagination.cursor];
   };

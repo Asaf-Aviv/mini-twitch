@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import SearchResults from './SearchResults/SearchResults';
 import Loader from '../Loader/Loader';
-import { twitchHeaders } from '../../../utils/utils';
+import { twitchFetcher } from '../../../utils/utils';
 
 import './TwitchSearchBar.sass';
 
@@ -22,7 +21,7 @@ const TwitchSearchBar = ({ selectStream }) => {
     setIsLoading(true);
 
     try {
-      const res = await axios(`https://api.twitch.tv/helix/users?login=${username}`, twitchHeaders);
+      const res = await twitchFetcher(`https://api.twitch.tv/helix/users?login=${username}`);
       setUsers(res.data.data);
     } catch (err) {
       console.log(err);

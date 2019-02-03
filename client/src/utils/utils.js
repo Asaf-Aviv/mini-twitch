@@ -1,11 +1,17 @@
-export const twitchHeaders = {
-  headers: {
-    'Client-ID': process.env.REACT_APP_TWITCH_CLIENT_ID,
-    Accept: 'application/vnd.twitchtv.v5+json',
-  },
+import axios from 'axios';
+
+const createFetcher = () => {
+  const instance = axios.create({
+    headers: {
+      'Client-ID': process.env.REACT_APP_TWITCH_CLIENT_ID,
+      Accept: 'application/vnd.twitchtv.v5+json',
+    },
+  });
+
+  return instance;
 };
 
-export function uniqueFrom(arr, key, side) {
+export const uniqueFrom = (arr, key, side) => {
   const reduceFunc = side === 'left' ? 'reduce' : 'reduceRight';
 
   return arr[reduceFunc]((uniques, obj) => {
@@ -14,4 +20,6 @@ export function uniqueFrom(arr, key, side) {
     }
     return uniques;
   }, []);
-}
+};
+
+export const twitchFetcher = createFetcher();

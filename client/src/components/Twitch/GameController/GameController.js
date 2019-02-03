@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import SelectedGame from './SelectedGame/SelectedGame';
 import GamesMenu from './GamesMenu/GamesMenu';
-import { twitchHeaders } from '../../../utils/utils';
+import { twitchFetcher } from '../../../utils/utils';
 
 import './GameController.sass';
 
@@ -17,7 +16,7 @@ const GameController = ({ selectGame, selectedGame }) => {
 
   const getTopGames = async () => {
     try {
-      const { data: { top } } = await axios('https://api.twitch.tv/kraken/games/top?limit=100', twitchHeaders);
+      const { data: { top } } = await twitchFetcher('https://api.twitch.tv/kraken/games/top?limit=100');
       setTopGames(top);
     } catch (err) {
       console.log(err);
