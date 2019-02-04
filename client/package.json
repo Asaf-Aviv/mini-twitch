@@ -15,11 +15,17 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "resolutions": {
+    "terser": "3.14.1"
+  },
   "useEslintrc": true,
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "terser": "3.14.1"
+  }
 }
